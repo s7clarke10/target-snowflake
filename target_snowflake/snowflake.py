@@ -707,6 +707,9 @@ class SnowflakeTarget(SQLInterface):
         if sql_type == 'TIMESTAMP_TZ':
             json_type = 'string'
             _format = 'date-time'
+        elif sql_type == 'DATE':
+            json_type = 'string'
+            _format = 'date'            
         elif sql_type == 'NUMBER':
             json_type = 'integer'
         elif sql_type == 'FLOAT':
@@ -749,6 +752,10 @@ class SnowflakeTarget(SQLInterface):
                 schema['format'] == 'date-time' and \
                 _type == 'string':
             sql_type = 'TIMESTAMP_TZ'
+        elif 'format' in schema and \
+                schema['format'] == 'date' and \
+                _type == 'string':
+            sql_type = 'DATE'            
         elif _type == 'boolean':
             sql_type = 'BOOLEAN'
         elif _type == 'integer':
